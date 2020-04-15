@@ -1,12 +1,12 @@
 import boto3
-import json
 
 dynamodb = boto3.resource('dynamodb')
 table = dynamodb.Table('demo-sls-person')
 
 
-def get(event, context):
-    result = table.get_item(
+def delete(event, context):
+    # delete the todo from the database
+    table.delete_item(
         Key={
             'id': event['pathParameters']['id']
         }
@@ -14,8 +14,7 @@ def get(event, context):
 
     # create a response
     response = {
-        "statusCode": 200,
-        "body": json.dumps(result['Item'])
+        "statusCode": 200
     }
 
     return response
